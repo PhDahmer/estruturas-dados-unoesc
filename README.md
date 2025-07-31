@@ -1,0 +1,36 @@
+# Estruturas de Dados – UNOESC
+
+Repositório com as **atividades da disciplina de Estruturas de Dados** do curso de **Engenharia da Computação** da **UNOESC**
+
+---
+
+## 📁 Organização
+
+Este repositório é dividido por aulas, com uma pasta para cada conjunto de atividades.
+
+### ✅ Aulas
+
+- `aula1/` – Criação de funções em **C**
+- *(Outras aulas serão adicionadas conforme o semestre avança)*
+
+---
+
+## 🛠️ Ferramentas utilizadas
+
+- **Linguagem:** C
+- **Editor sugerido:** VS Code
+- **Compilador:** GCC
+- **SO:** MacOS
+
+---
+
+## 📚 Informações da disciplina
+
+- **Disciplina:** Estruturas de Dados  
+- **Curso:** Engenharia da Computação  
+- **Instituição:** UNOESC – Campus Joaçaba  
+- **Período:** 2025/2  
+
+---
+
+*Repositório criado para fins acadêmicos.*
