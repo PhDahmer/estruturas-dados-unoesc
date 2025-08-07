@@ -11,7 +11,7 @@ Este repositório é dividido por aulas, com uma pasta para cada conjunto de ati
 ### ✅ Aulas
 
 - `aula1/` – Criação de funções em **C**
-- *(Outras aulas serão adicionadas conforme o semestre avança)*
+- `aula2/` – Utilização de ponteiros e endereços em **C**
 
 ---
 
