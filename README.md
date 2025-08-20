@@ -13,6 +13,7 @@ Este repositório é dividido por aulas, com uma pasta para cada conjunto de ati
 - `aula1/` – Criação de funções em **C**
 - `aula2/` – Utilização de ponteiros e endereços em **C**
 - `aula3/` – Definição e utilização de Estruturas em **C**
+- `aula4/` - Utilização de Realloc e Free para otimização de memória em **C**
 
 ---
 
