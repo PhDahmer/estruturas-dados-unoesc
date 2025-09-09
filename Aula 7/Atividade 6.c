@@ -1,34 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Registro {
+typedef struct Registro { // Define a estrutura do nó da lista
     int valor;
-    struct Registro *prox;
+    struct Registro *prox; // ponteiro para o próximo nó
 } REGISTRO;
 
-void inserir(REGISTRO **inicio, int valor) {
-    REGISTRO *novo = (REGISTRO *)malloc(sizeof(REGISTRO));
-    novo->valor = valor;
-    novo->prox = *inicio;
-    *inicio = novo;
+void inserir(REGISTRO **inicio, int valor) { // Insere um novo nó no início da lista
+    REGISTRO *novo = (REGISTRO *)malloc(sizeof(REGISTRO)); // Aloca memória para o novo nó
+    novo->valor = valor; // Define o valor do novo nó
+    novo->prox = *inicio; // Aponta o novo nó para o início atual
+    *inicio = novo; // Atualiza o início da lista para o novo nó
 }
 
-void imprimir(REGISTRO *inicio) {
-    REGISTRO *atual = inicio;
-    while (atual != NULL) {
-        printf("%d -> ", atual->valor);
-        atual = atual->prox;
+void imprimir(REGISTRO *inicio) { // Imprime todos os valores da lista
+    REGISTRO *atual = inicio; // Começa do início da lista
+    while (atual != NULL) { // Percorre até o final da lista
+        printf("%d -> ", atual->valor); // Imprime o valor do nó atual
+        atual = atual->prox; // Move para o próximo nó
     }
     printf("NULL\n");
 }
 
-void excluir(REGISTRO **inicio, int valor) {
-    REGISTRO *atual = *inicio;
-    REGISTRO *anterior = NULL;
+void excluir(REGISTRO **inicio, int valor) { // Remove um nó com o valor especificado
+    REGISTRO *atual = *inicio; // Começa do início da lista
+    REGISTRO *anterior = NULL; // Ponteiro para o nó anterior
 
-    while (atual != NULL && atual->valor != valor) {
-        anterior = atual;
-        atual = atual->prox;
+    while (atual != NULL && atual->valor != valor) { // Procura o valor na lista
+        anterior = atual; // Atualiza o nó anterior
+        atual = atual->prox; // Move para o próximo nó
     }
 
     if (atual == NULL) return; // Valor não encontrado
