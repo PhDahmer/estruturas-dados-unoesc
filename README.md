@@ -17,6 +17,7 @@ Este repositório é dividido por aulas, com uma pasta para cada conjunto de ati
 - `Lista de Exercícios I/` - Lista de exercícios para complementar o estudo para próxima prova, utilizando a linguem **C** para desenvolver os **10 códigos**
 - `aula7/` - Atividades sobre o conceito de Estrutura de Dados Encadeado em **C**
 - `aula8/` - Atividades sobre Listas Duplamente Encadeada em **C**
+- `aula8/` - Atividades sobre Pilhas simplesmente Encadeada em **C**
 
 ---
 
