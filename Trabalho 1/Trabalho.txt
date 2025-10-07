@@ -1,0 +1,31 @@
+Objetivo
+
+Implementar estruturas simplesmente encadeadas em C, 
+exercitando alocação dinâmica (malloc/free/realloc), ponteiros, 
+funções e structs. Opcional (bônus): lista duplamente encadeada.
+
+Requisitos
+
+A estrutura de dados deve servir para controlar uma playlist, 
+cada elemento deve conter o nome do artista, 
+nome da música e tempo de duração.
+
+O programa deve permitir ao usuário 
+informar o nome da playlist e inserir as 
+músicas no início da playlist e no final. 
+Deve possuir uma função função que remove a 
+música que está na vez para execução e outra que permite ao 
+usuário escolher qual música quer remover.
+
+Entrega
+
+Deverá ser entregue nesta tarefa um arquivo .zip 
+com o código do programa e um relatório em PDF 
+explicando em detalhes a implementação e forma de uso.
+
+
+Avaliação
+
+A avaliação será presencial e o aluno deve estar apto 
+a mostrar o programa funcionando e responder aos questionamentos 
+do professor.
