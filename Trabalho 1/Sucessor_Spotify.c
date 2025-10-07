@@ -3,8 +3,8 @@
 #include <string.h>
 
 typedef struct Playlist {
-    char nome[50];     
-    char artista[50];
+    char nome[80];     
+    char artista[80];
     int tempoTotal;    
     struct Playlist *prox;
     struct Playlist *ant;
@@ -61,7 +61,7 @@ char* nomePlaylist() {
     return nome;
 }
 
-void inserirInicio(PLAYLIST **inicio, char *nome[], char *artista[], int tempo) {
+void inserirInicio(PLAYLIST **inicio, char *nome, char *artista, int tempo) {
     PLAYLIST *novo = (PLAYLIST *)malloc(sizeof(PLAYLIST));
     if (!novo) return;
 
@@ -78,7 +78,7 @@ void inserirInicio(PLAYLIST **inicio, char *nome[], char *artista[], int tempo) 
     *inicio = novo;
 }
 
-void inserirFim(PLAYLIST **inicio, char *nome[], char *artista[], int tempo) {
+void inserirFim(PLAYLIST **inicio, char *nome, char *artista, int tempo) {
     PLAYLIST *novo = (PLAYLIST *)malloc(sizeof(PLAYLIST));
     if (!novo) return;
 
@@ -101,11 +101,74 @@ void inserirFim(PLAYLIST **inicio, char *nome[], char *artista[], int tempo) {
     novo->ant = atual;
 }
 
+void removerInicio(PLAYLIST **inicio) {
+    if (*inicio == NULL) return;
+
+    PLAYLIST *temp = *inicio;
+    *inicio = (*inicio)->prox;
+
+    if (*inicio != NULL)
+        (*inicio)->ant = NULL;
+
+    free(temp);
+}
+
+void removerQualquer(PLAYLIST **inicio, char *nome) {
+    if (*inicio == NULL) return;
+
+    PLAYLIST *atual = *inicio;
+    while (atual != NULL && strcmp(atual->nome, nome) != 0)
+        atual = atual->prox;
+
+    if (atual == NULL) return; 
+
+    if (atual->ant != NULL)
+        atual->ant->prox = atual->prox;
+    else
+        *inicio = atual->prox; 
+
+    if (atual->prox != NULL)
+        atual->prox->ant = atual->ant;
+
+    free(atual);
+}
+
+void alterarMusica(PLAYLIST *inicio, char *nome, char *novoNome, char *novoArtista, int novoTempo) {
+    PLAYLIST *atual = inicio;
+    while (atual != NULL && strcmp(atual->nome, nome) != 0)
+        atual = atual->prox;
+
+    if (atual == NULL) {
+        printf("Música não encontrada.\n");
+        return;
+    }
+
+    strcpy(atual->nome, novoNome);
+    strcpy(atual->artista, novoArtista);
+    atual->tempoTotal = novoTempo;
+}
+
+void listarPlaylist(PLAYLIST *inicio, char *nomePlaylist) {
+    printf("\n==================== Playlist: %s =======================\n", nomePlaylist);
+
+    if (inicio == NULL) {
+        printf("A playlist está vazia.\n");
+    } else {
+        PLAYLIST *atual = inicio;
+        int i = 1;
+        while (atual != NULL) {
+            printf("\n%d - Música: %s | Artista: %s \n", i, atual->nome, atual->artista);
+            printf("Duração: %02d:%02d\n", atual->tempoTotal / 60, atual->tempoTotal % 60);
+            atual = atual->prox;
+            i++;
+        }
+    }
+
+    printf("\n===================================================================\n\n");
+}
 
 int main() {
-PLAYLIST *playlist = NULL;
-
-    menu();
-    // Implementar o código do sucessor do Spotify aqui
+    PLAYLIST *playlist = NULL;
+    char *nomeDaPlaylist = nomePlaylist(); // define o nome da playlist
     return 0;
 }
