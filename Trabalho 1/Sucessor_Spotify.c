@@ -30,35 +30,20 @@ int menu() {
     printf("|  4 - Remover qualquer música                      |\n");
     printf("|  5 - Alterar música                               |\n");
     printf("|  6 - Listar playlist                              |\n");
+    printf("|  7 - Fechar o programa                            |\n");
     printf("-----------------------------------------------------\n");
 
     do {
         printf("|  Escolha uma opção: ");
         scanf("%d", &opcao);
 
-        if (opcao < 1 || opcao > 6) {
+        if (opcao < 1 || opcao > 7) {
             printf("|  Opção inválida! Tente novamente.\n");
         }
-    } while (opcao < 1 || opcao > 6);
+    } while (opcao < 1 || opcao > 7);
 
     printf("-----------------------------------------------------\n\n");
     return opcao;
-}
-
-char* nomePlaylist() {
-    char temp[100];
-    printf("Digite o nome da playlist: ");
-    scanf(" %99[^\n]", temp);  // lê até o ENTER (permite espaços)
-    
-    // aloca memória do tamanho certo
-    char *nome = malloc(strlen(temp) + 1);
-    if (nome == NULL) {
-        printf("Erro ao alocar memória.\n");
-        exit(1);
-    }
-    
-    strcpy(nome, temp);  // copia o texto
-    return nome;
 }
 
 void inserirInicio(PLAYLIST **inicio, char *nome, char *artista, int tempo) {
@@ -169,6 +154,90 @@ void listarPlaylist(PLAYLIST *inicio, char *nomePlaylist) {
 
 int main() {
     PLAYLIST *playlist = NULL;
-    char *nomeDaPlaylist = nomePlaylist(); // define o nome da playlist
-    return 0;
+    char nomePlaylistAtual[100] = "Minha Playlist";
+    int opcao;
+
+    while(1){
+        opcao = menu();
+        
+        switch(opcao){
+
+            case 1: {
+                char temp[100];
+                printf("Digite o nome da playlist: ");
+                scanf(" %99[^\n]", temp);  // lê até o ENTER (permite espaços)
+                strncpy(nomePlaylistAtual, temp, sizeof(nomePlaylistAtual)-1);
+                nomePlaylistAtual[sizeof(nomePlaylistAtual)-1] = '\0';
+                printf("Nome da playlist alterado para: %s\n", nomePlaylistAtual);
+                break;
+            }
+            case 2: {
+                char nome[80], artista[80], escolha[3];
+                int tempo, minutos, segundos;
+                
+                printf("Digite o nome da música: ");
+                scanf(" %79[^\n]", nome);
+                printf("Digite o nome do artista: ");
+                scanf(" %79[^\n]", artista);
+                printf("Digite a duração da música (minutos): ");
+                scanf("%d", &minutos);
+                printf("Digite a duração da música (segundos): ");
+                scanf("%d", &segundos);
+                tempo = minutos * 60 + segundos;
+                printf("Deseja inserir no começo da playlist, ou no fim? (C or F)\n");
+                scanf(" %2s", escolha);
+                if (escolha[0] == 'C' || escolha[0] == 'c'){
+                    inserirInicio(&playlist, nome, artista, tempo);
+                    printf("Música adicionada com sucesso!\n");}
+                else {   
+                inserirFim(&playlist, nome, artista, tempo);
+                printf("Música adicionada com sucesso!\n");}
+                break;
+            }
+            case 3: {
+                removerInicio(&playlist);
+                printf("Primeira música removida com sucesso!\n");
+                break;
+            }
+            case 4: {
+                char nome[80];
+                printf("Digite o nome da música a ser removida: ");
+                scanf(" %79[^\n]", nome);
+                
+                removerQualquer(&playlist, nome);
+                printf("Música removida com sucesso (se encontrada)!\n");
+                break;
+            }
+            case 5: {
+                char nome[80], novoNome[80], novoArtista[80];
+                int novoTempo;
+                
+                printf("Digite o nome da música a ser alterada: ");
+                scanf(" %79[^\n]", nome);
+                
+                printf("Digite o novo nome da música: ");
+                scanf(" %79[^\n]", novoNome);
+                printf("Digite o novo nome do artista: ");
+                scanf(" %79[^\n]", novoArtista);
+                printf("Digite a nova duração da música (em segundos): ");
+                scanf("%d", &novoTempo);
+                
+                alterarMusica(playlist, nome, novoNome, novoArtista, novoTempo);
+                printf("Música alterada com sucesso (se encontrada)!\n");
+                break;
+            }
+            case 6: {
+                listarPlaylist(playlist, nomePlaylistAtual);
+                break;
+            }
+            case 7: {
+                // Libera memória antes de sair
+                while (playlist != NULL) {
+                    removerInicio(&playlist);
+                }
+                printf("Programa encerrado.\n");
+                return 0;
+                }
+        }
+    }
 }
