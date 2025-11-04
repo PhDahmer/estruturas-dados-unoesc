@@ -20,6 +20,7 @@ Este repositório é dividido por aulas, com uma pasta para cada conjunto de ati
 - `aula9/` - Atividades sobre Pilhas simplesmente Encadeada em **C**
 - `aula10/` - Aula sobre ordenação: Bubble Sort & Insertion Sort 
 - `trabalho1/` - Criação de uma Playlist
+- `trabalho2/` - Criação de um benchmark entre métodos de Ordenação
 
 ---
 
