@@ -210,70 +210,80 @@ void mergeSort(TABELA **inicio)
     *inicio = _mergeSort_recursivo(*inicio);
 }
 
-//      PEGA O ÚLTIMO ELEMENTO DA LISTA
-TABELA* pegaUltimo(TABELA *inicio) {
-    if (inicio == NULL)
-        return NULL;
-
-    while (inicio->prox != NULL)
-        inicio = inicio->prox;
-
-    return inicio;
+// Insere nó no final
+void insereFim(TABELA **head, TABELA **tail, TABELA *n) {
+    n->prox = NULL;
+    if (*head == NULL) {
+        *head = *tail = n;
+    } else {
+        (*tail)->prox = n;
+        *tail = n;
+    }
 }
 
-//        PARTIÇÃO (retorna o pivô final)
-TABELA* particiona(TABELA *inicio, TABELA *fim) {
-    int pivo = fim->numero;
-    TABELA *i = inicio;
-    TABELA *j = inicio;
+void particionaNos(TABELA *inicio, TABELA **menorH, TABELA **menorT,
+                   TABELA **igualH, TABELA **igualT,
+                   TABELA **maiorH, TABELA **maiorT) {
 
-    while (j != fim) {
-        if (j->numero < pivo) {
-            int temp = i->numero;
-            i->numero = j->numero;
-            j->numero = temp;
-            i = i->prox;
-        }
-        j = j->prox;
+    int pivo = inicio->numero;
+
+    while (inicio != NULL) {
+        TABELA *prox = inicio->prox;
+        inicio->prox = NULL;
+
+        if (inicio->numero < pivo)
+            insereFim(menorH, menorT, inicio);
+
+        else if (inicio->numero == pivo)
+            insereFim(igualH, igualT, inicio);
+
+        else
+            insereFim(maiorH, maiorT, inicio);
+
+        inicio = prox;
+    }
+}
+
+TABELA* quickSort_nos(TABELA *inicio) {
+    if (!inicio || !inicio->prox)
+        return inicio;
+
+    TABELA *menorH = NULL, *menorT = NULL;
+    TABELA *igualH = NULL, *igualT = NULL;
+    TABELA *maiorH = NULL, *maiorT = NULL;
+
+    particionaNos(inicio, &menorH, &menorT, &igualH, &igualT, &maiorH, &maiorT);
+
+    // Ordena recursivamente a parte menor
+    if (menorH)
+        menorH = quickSort_nos(menorH);
+
+    // Ordena recursivamente a parte maior
+    if (maiorH)
+        maiorH = quickSort_nos(maiorH);
+
+    // Junta menor + igual + maior
+    TABELA *resultado = NULL;
+    TABELA *tail = NULL;
+
+    if (menorH) {
+        resultado = menorH;
+        tail = menorH;
+        while (tail->prox) tail = tail->prox;
+        tail->prox = igualH;
+    } else {
+        resultado = igualH;
+        tail = igualT;
     }
 
-    // Troca o pivô para a posição correta
-    int temp = i->numero;
-    i->numero = fim->numero;
-    fim->numero = temp;
+    if (maiorH)
+        tail->prox = maiorH;
 
-    return i; // Retorna o novo pivô
+    return resultado;
 }
 
-
-//      QUICK SORT RECURSIVO (LISTA LIGADA)
-void _quickSort_recursivo(TABELA *inicio, TABELA *fim) {
-    if (inicio == NULL || inicio == fim || inicio->prox == NULL)
-        return;
-
-    TABELA *pivo = particiona(inicio, fim);
-
-    // Parte esquerda (até o nó antes do pivô)
-    TABELA *anterior_pivo = inicio;
-    if (pivo != inicio) {
-        while (anterior_pivo->prox != pivo)
-            anterior_pivo = anterior_pivo->prox;
-
-        _quickSort_recursivo(inicio, anterior_pivo);
-    }
-
-    // Parte direita (depois do pivô)
-    if (pivo != fim)
-        _quickSort_recursivo(pivo->prox, fim);
-}
-
-//          FUNÇÃO PÚBLICA QUICK SORT
 void quickSort(TABELA **inicio) {
-    if (inicio == NULL || *inicio == NULL || (*inicio)->prox == NULL)
-        return;
-
-    TABELA *fim = pegaUltimo(*inicio);
-    _quickSort_recursivo(*inicio, fim);
+    *inicio = quickSort_nos(*inicio);
 }
 
 void apagarTabela(TABELA **inicio) {
